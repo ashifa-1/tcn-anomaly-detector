@@ -1,0 +1,17 @@
+{
+  "dataset_used": "NASA_SMAP_MSL",
+  "model_hyperparameters": {
+    "window_size": 50,
+    "latent_dim": 64,
+    "tcn_layers": 2,
+    "tcn_kernel_size": 3
+  },
+  "thresholding_params": {
+    "percentile": {
+      "quantile": 0.95
+    },
+    "pot": {
+      "initial_quantile": 0.98
+    }
+  }
+}
