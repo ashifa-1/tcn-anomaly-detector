@@ -1,11 +1,5 @@
+venv/
 __pycache__/
 *.pyc
-*.pkl
-*.npy
-.env
-models/
-results/
 data/raw/
-data/processed/
-
-venv/
+models/
