@@ -3,6 +3,7 @@ import numpy as np
 import torch
 import torch.nn as nn
 import pandas as pd
+from scipy.stats import genpareto
 
 # -----------------------------
 # Step 1: Load test data
@@ -115,3 +116,36 @@ pd.DataFrame({
 }).to_csv("results/anomalies_percentile.csv", index=False)
 
 print("✅ Evaluation complete!")
+
+
+# -----------------------------
+# Step 7: POT Threshold
+# -----------------------------
+print("\nApplying POT method...")
+
+# Initial threshold (e.g., 98th percentile)
+initial_threshold = np.percentile(smoothed_errors, 98)
+
+# Excesses above threshold
+excesses = smoothed_errors[smoothed_errors > initial_threshold] - initial_threshold
+
+# Fit Generalized Pareto Distribution
+if len(excesses) > 0:
+    shape, loc, scale = genpareto.fit(excesses)
+
+    # Calculate POT threshold
+    pot_threshold = initial_threshold + genpareto.ppf(0.99, shape, loc=loc, scale=scale)
+
+    pot_anomalies = np.where(smoothed_errors > pot_threshold)[0]
+
+    print("POT Threshold:", pot_threshold)
+    print("POT Anomalies:", len(pot_anomalies))
+
+    # Save POT results
+    pd.DataFrame({
+        "index": pot_anomalies,
+        "score": smoothed_errors[pot_anomalies]
+    }).to_csv("results/anomalies_pot.csv", index=False)
+
+else:
+    print("No excess values for POT")
