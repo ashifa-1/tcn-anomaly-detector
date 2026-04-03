@@ -124,7 +124,7 @@ print("✅ Evaluation complete!")
 print("\nApplying POT method...")
 
 # Initial threshold (e.g., 98th percentile)
-initial_threshold = np.percentile(smoothed_errors, 98)
+initial_threshold = np.percentile(smoothed_errors, 95)
 
 # Excesses above threshold
 excesses = smoothed_errors[smoothed_errors > initial_threshold] - initial_threshold
@@ -134,7 +134,7 @@ if len(excesses) > 0:
     shape, loc, scale = genpareto.fit(excesses)
 
     # Calculate POT threshold
-    pot_threshold = initial_threshold + genpareto.ppf(0.99, shape, loc=loc, scale=scale)
+    pot_threshold = initial_threshold + genpareto.ppf(0.95, shape, loc=loc, scale=scale)
 
     pot_anomalies = np.where(smoothed_errors > pot_threshold)[0]
 
