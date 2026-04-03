@@ -7,3 +7,5 @@ models/
 results/
 data/raw/
 data/processed/
+
+venv/
