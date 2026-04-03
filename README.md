@@ -17,6 +17,7 @@ This project implements an end-to-end unsupervised anomaly detection system for 
 * Interactive Streamlit dashboard
 * Fully containerized using Docker
 * JSON report generation
+* Advanced thresholding using Peak-Over-Threshold (POT)
 
 ---
 
@@ -121,10 +122,12 @@ http://localhost:8501
 
 ## Results
 
-* Training loss reduced from **0.52 → 0.0007**
-* ~430 anomalies detected
-* Smooth anomaly score visualization
-* Interactive threshold control
+* Training loss reduced from **1.06 → 0.0010**
+* Percentile-based anomalies detected: **1875**
+* POT-based anomalies detected: **153**
+* Smooth anomaly score visualization using EMA
+* Interactive threshold control via Streamlit dashboard
+* Multi-channel training improved model generalization
 
 ---
 
